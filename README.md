@@ -1,7 +1,41 @@
-# GitHub Codespaces ♥️ Jupyter Notebooks
+realtor.data <- read.csv("~/WORK/DATA ANALYTICS/CSV/realtor-data.csv")
 
-Welcome to your shiny new codespace! We've got everything fired up and running for you to explore Python and Jupyter notebooks.
+## To find out the column names of the dataframe
+colnames(realtor.data)
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with what you're seeing right now - where you go from here is up to you!
+## To rename the datafram for easy reference
+RD <- realtor.data 
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+## To find out any empty columns or NULL values and remove them
+is.na(RD)
+
+RD_clean <- na.omit(RD)
+
+RD_clean$prev_sold_date <- NULL
+
+## To change the variables from acres to sqm, as that us my prefered Unit. To also round off to the nearest whole number
+
+RD_clean$area_sqm <- RD_clean$acre_lot * 4046.86
+
+RD_clean$acre_lot <- NULL
+
+RD_clean$area_sqm <- round(RD_clean$area_sqm)
+
+RD_clean$house_size_sqm <- round(RD_clean$house_size * 0.09290304)
+
+RD_clean <- RD_clean[, c(1, 2, 3, 4, 10, 5, 6, 7, 8, 9)]
+
+RD_clean$house_size <- NULL
+
+nrow(RD_clean)
+
+## To set the maximum number of bedrooms for the dataset
+max(RD_clean$bed)
+
+RD_clean_filtered <- subset(RD_clean, bed <= 5)
+
+View(RD_clean_filtered)
+
+max(RD_clean_filtered$bed)
+
+write.csv(RD_clean_filtered, "Realtor.data.csv", row.names = FALSE)
