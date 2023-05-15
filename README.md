@@ -1,3 +1,4 @@
+### Imported the raw dataset from a local storage device
 realtor.data <- read.csv("~/WORK/DATA ANALYTICS/CSV/realtor-data.csv")
 
 ### To find out the column names of the dataframe
